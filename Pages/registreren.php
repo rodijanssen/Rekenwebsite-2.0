@@ -9,6 +9,7 @@ if(isset($_POST['Registreer']))
 {
     $wachtwoord = $user->randomPassword();
     $user->create($_POST['Voornaam'], $_POST['Achternaam'], $_POST['Select'], $wachtwoord, 1);
+    header("Refresh:0");
 }
 ?>
 
