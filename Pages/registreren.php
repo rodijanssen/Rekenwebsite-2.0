@@ -2,12 +2,11 @@
     include '../Functions/main_functions.php';
     include '../Assets/layout.php';
 
-$groep = new User($mysqli);
-$groepen = $groep->read();
+$user = new User($mysqli);
+$groepen = $user->read();
 
 if(isset($_POST['Registreer']))
 {
-    $user = new User($mysqli);
     $wachtwoord = $user->randomPassword();
     $user->create($_POST['Voornaam'], $_POST['Achternaam'], $_POST['Select'], $wachtwoord, 1);
 }
