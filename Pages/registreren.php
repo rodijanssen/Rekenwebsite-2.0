@@ -3,8 +3,14 @@
     include '../Assets/layout.php';
 
 $groep = new User($mysqli);
-
 $groepen = $groep->read();
+
+if(isset($_POST['Registreer']))
+{
+    $user = new User($mysqli);
+    $wachtwoord = $user->randomPassword();
+    $user->create($_POST['Voornaam'], $_POST['Achternaam'], $_POST['Select'], $wachtwoord, 1);
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +35,7 @@ $groepen = $groep->read();
                 </div>
                 <div class="dropdown mb-3">
                     <label for="VoorbeeldGroep1" class="form-label">Kies je groep</label><br />
-                        <select name="select" class="form-select form-control mb-3" aria-label=".form-select-lg example">
+                        <select name="Select" class="form-select form-control mb-3" aria-label=".form-select-lg example">
                             <?php
                                 foreach ($groepen as $optie) {
                                 echo '<option value="' . $optie['ID'] . '">' . "Groep " . $optie['Groep'] . '</option>';
