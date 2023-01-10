@@ -3,7 +3,7 @@
     include '../Assets/layout.php';
 
 $user = new User($mysqli);
-$groepen = $user->read();
+$groepen = $user->read("groepen");
 
 if(isset($_POST['Registreer']))
 {
@@ -19,7 +19,6 @@ if(isset($_POST['Registreer']))
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Assets/main.css">
     <title>Registreren</title>
 </head>
 <body>

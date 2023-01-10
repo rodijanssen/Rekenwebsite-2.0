@@ -18,15 +18,26 @@ class User {
         $stmt->close();
     }
 
-    public function read() {
+    public function read($datatable) {
         // Select all data from the users table
-        $stmt = $this->mysqli->prepare("SELECT * FROM groepen");
+        $stmt = $this->mysqli->prepare("SELECT * FROM " . $datatable);
         $stmt->execute();       
         $result = $stmt->get_result(); // Bind the result to a new variable
         $data = $result->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
         $stmt->close(); // Close the statement
         return $data; // Return the data
         }
+        
+    public function filtersearch($datatable, $datarow, $search) {
+            // Select all data from the users table
+        $stmt = $this->mysqli->prepare("SELECT * FROM " . $datatable . " where " . $datarow . " = ?");
+        $stmt->bind_param("s", $search);
+        $stmt->execute();       
+        $result = $stmt->get_result(); // Bind the result to a new variable
+        $data = $result->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
+        $stmt->close(); // Close the statement
+        return $data; // Return the data
+        }    
 
     public function randomPassword() {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -37,6 +48,24 @@ class User {
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string
+    }
+
+    public function login($Voornaam, $Wachtwoord) {
+        // Check the database to see if there is a user with the given username and password
+        $stmt = $this->mysqli->prepare("SELECT * FROM gebruikers WHERE Voornaam = ? AND Wachtwoord = ?");
+        $stmt->bind_param("si", $Voornaam, $Wachtwoord);
+        $stmt->execute();
+        $result = $stmt->get_result(); // Bind the result to a new variable
+        $user = $result->fetch_assoc(); // Fetch the first row as an associative array
+        $stmt->close(); // Close the statement
+      
+        // If the user was found, return true
+        if ($user) {
+          return true;
+        }
+      
+        // If the user was not found, return false
+        return false;
     }
 }
 ?>
