@@ -36,6 +36,9 @@
                 }
             }
             echo $_SESSION['Voornaam'];
+            echo $_SESSION['Wachtwoord'];
+            unset($_SESSION['Voornaam']);
+            unset($_SESSION['Wachtwoord']);
         ?>     
     </form>
 </body>
